@@ -40,10 +40,19 @@ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_HAS_LARGE_FILESYSTEM := true
 
 # Kernel
+TARGET_USES_64_BIT_BINDER := true
+TARGET_IS_64_BIT := true
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.selinux=permissive
 BOARD_MKBOOTIMG_ARGS := --base 0x40078000 --pagesize 2048 --kernel_offset 0x00008000 --ramdisk_offset 0x03f88000 --second_offset 0x00e88000 --tags_offset 0x0df88000 --board 1480056755
+TARGET_KERNEL_SOURCE := kernel/cyanogen/mt6735
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_CONFIG := cyanogenmod_porridge_defconfig
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+MTK_APPENDED_DTB_SUPPORT := yes
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel.gz
 
 # Partitions
@@ -55,8 +64,11 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 1610612736
 BOARD_CACHEIMAGE_PARTITION_SIZE := 419430400
 BOARD_FLASH_BLOCK_SIZE := 131072
 
+# Recovery
+TARGET_RECOVERY_FSTAB := vendor/unihertz/jellypro/vendor/etc/fstab.mt6735
+
 # System Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Hack for building without kernel sources
-$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+# $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
